@@ -1,0 +1,12 @@
+{
+  "name": "label-printer",
+  "version": "1.0.0",
+  "description": "cmd tool to print label with my printer",
+  "main": "pdf-gen.js",
+  "author": "charlie",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "jspdf": "^2.5.1"
+  }
+}
