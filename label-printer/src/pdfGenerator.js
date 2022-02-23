@@ -1,7 +1,7 @@
 const fs = require("fs");
 const { jsPDF } = require("jspdf");
 
-class pdfGenerator {
+module.exports = class pdfGenerator {
     constructor() {
         // 8.4mm x 17.6mm is page size of 2x8 label chunk, each label is 4.0mm(width) x 2.0mm (height), and each border for each label have 0.1mm margin.
         this.doc = new jsPDF({
@@ -39,16 +39,7 @@ class pdfGenerator {
         );
     }
 
-    save() {
-        this.doc.save("test.pdf");
+    save(fileName) {
+        this.doc.save(fileName);
     }
-}
-
-const gen = new pdfGenerator();
-for (var i = 0; i < 8; i++) {
-    for (var j = 0; j < 2; j++) {
-        gen.setText(i, j, "打印机测试!");
-    }
-}
-
-gen.save();
+};
