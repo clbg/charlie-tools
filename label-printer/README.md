@@ -20,6 +20,12 @@ add to `assets` folder
 
 # Usage
 
+## setup printer 
+```
+lpstat -p -d #list available printers
+lpoptions -d FUJI_XEROX_DocuPrint_xxx #set default printer
+```
+
 ```
 yarn install
 export TELEGRAM_TOKEN={replace with your own token}
@@ -31,6 +37,9 @@ text in telegram:
 ```
 /label 0 0 测试标签
 ```
+
+
+
 
 # Useful links
 
