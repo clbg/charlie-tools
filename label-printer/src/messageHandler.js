@@ -1,4 +1,5 @@
 const TelegramBot = require("node-telegram-bot-api");
+const { exec } = require("child_process");
 
 var pdfGenerator = require("./pdfGenerator");
 var validator = require("validator");
@@ -71,6 +72,21 @@ const argumentValidator = (msg) => {
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, { polling: true });
 
+const printPdf = (fileName, bot, chatId) => {
+    const cmd = `lp  -o  media=Custom.84x176mm ${fileName}`;
+    exec(cmd, (error, stdout, stderr) => {
+        if (error) {
+            bot.sendMessage(chatId, `printing error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            bot.sendMessage(chatId, `printing stderr: ${stderr}`);
+            return;
+        }
+        bot.sendMessage(chatId, `printing stdout: ${stdout}`);
+    });
+};
+
 // Matches "/label [whatever]"
 bot.onText(/\/label (.+)/, (msg, match) => {
     // 'msg' is the received Message from Telegram
@@ -93,7 +109,9 @@ bot.onText(/\/label (.+)/, (msg, match) => {
         const gen = new pdfGenerator();
         gen.setText(validateAns.i, validateAns.j, validateAns.text);
 
-        gen.save("tmpfile.pdf");
+        const fileName = "tmpfile.pdf";
+        gen.save(fileName);
         bot.sendMessage(chatId, "saved pdf...");
+        printPdf(fileName, bot,chatId);
     }
 });
