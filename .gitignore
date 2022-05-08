@@ -1,4 +1,5 @@
 # PDF files
+.DS_Store
 *.pdf
 
 # Logs
